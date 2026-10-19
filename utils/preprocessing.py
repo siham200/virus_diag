@@ -76,21 +76,17 @@ class DataPreprocessor:
         return self.transform(X)
 
     def transform_patient(self, patient_data):
-        """
-        Prétraite les données d'un SEUL patient pour la prédiction.
         
-        :param patient_data: Liste ou array [age, temperature, toux, fatigue, mal_de_gorge, congestion]
-        :return: Données du patient transformées (prêtes pour le modèle)
-        """
         if not self.is_fitted:
             raise RuntimeError("❌ Le preprocessor n'a pas été ajusté.")
-        
-        # Convertir en array 2D (1 patient = 1 ligne)
+            
+        # Convertir en DataFrame avec les bons noms de colonnes
+        feature_names = self.get_feature_names()
         patient_array = np.array(patient_data).reshape(1, -1)
-        
-        # Appliquer les mêmes transformations
-        return self.transform(patient_array)
-
+        patient_df = pd.DataFrame(patient_array, columns=feature_names)
+            
+            # Appliquer les mêmes transformations
+        return self.transform(patient_df)
     def get_feature_names(self):
         """
         Retourne les noms des features.
