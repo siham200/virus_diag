@@ -7,7 +7,7 @@ import os
 import pickle
 import numpy as np
 
-from core.logistic_regression import LogisticRegressionModel
+from core.random_forest import RandomForestModel
 from pipeline.trainer import Trainer
 from pipeline.evaluator import Evaluator
 from pipeline.clinical_predictor import ClinicalPredictor
@@ -29,7 +29,11 @@ def main():
     print("\n📌 ÉTAPE 1 : Entraînement du modèle")
     print("-" * 70)
     
-    model = LogisticRegressionModel(C=1.0, max_iter=1000, random_state=42)
+    model = RandomForestModel(
+    n_estimators=100,
+    max_depth=None,
+    random_state=42
+)
     
     trainer = Trainer(
         model=model,
